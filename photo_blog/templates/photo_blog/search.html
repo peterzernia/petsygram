@@ -1,0 +1,50 @@
+{% extends "photo_blog/base.html" %}
+{% load material_form %}
+{% load photo_blog_tags %}
+{% block content %}
+
+<form method="GET" action="">
+  <input type="text" placeholder="Search" name="q" value="{{ request.GET.q }}">
+  <input class="btn btn-secondary" type="submit" name="" value="Search">
+</form>
+
+{% if request.GET.q %}
+  {% if request.GET.q|startswith:'#'  %}
+    {% for post in posts reversed %}
+      <article class="media content-section mt-5">
+        <div class="media-body">
+          <div class="article-metadata">
+            <div>
+              <img class='rounded-circle article-img'src="{{ post.author.profile.image.url }}" height="50" width="50">
+              <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
+              {% if post.location %}
+              <small>{{post.location}}</small>
+              {% endif %}
+            </div>
+            <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
+            {% if user not in post.likes.all %}
+              <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
+            {% else %}
+              <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
+            {% endif %}
+            {{post.likes.count}} <a class="black-link-plain" href="{% url 'photo_blog-post_likes' post.id %}">Likes</a> </br>
+            <p>
+              <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
+              {{ post.caption }}
+            </p>
+            <a href="{% url 'photo_blog-detail' post.id %}">View Comments</a>
+            <p><small>{{ post.date_posted|date:'F d, Y' }}</small></p>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  {% else %}
+    {% for profile in posts %}
+      <img class='rounded-circle article-img mt-1' src="{{ profile.image.url }}" height="50" width="50">
+      <a class="black-link" href="{% url 'photo_blog-profile' profile.user.username %}">{{ profile.user }}</a>
+      </br>
+    {% endfor %}
+  {% endif %}
+{% endif %}
+
+{% endblock %}

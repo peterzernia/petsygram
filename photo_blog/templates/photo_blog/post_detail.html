@@ -1,0 +1,68 @@
+{% extends "photo_blog/base.html" %}
+{% block content %}
+
+<script type="text/javascript">
+  function toggleLike(){
+        $.ajax({
+          url: "{% url 'photo_blog-post_like_api' post.id %}",
+          data: {},
+          dataType: "json",
+          success: function(data) {
+            $("#likeCount").html(data.like_count + ' likes');
+            $('#ImageElement').replaceWith(data.img);
+            console.log(data);
+          }
+          });
+      };
+</script>
+
+
+<div class="content">
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <div>
+          <img class='rounded-circle article-img'src="{{ post.author.profile.image.url }}" height="50" width="50">
+          <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
+          {% if post.location %}
+          <small>{{post.location}}</small>
+          {% endif %}
+        </div>
+        <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
+        {% if user in post.likes.all %}
+        <input id="ImageElement" class="mt-1" type="image" src="/media/nav_buttons/liked.svg" height="17" width="17" onclick="toggleLike()"/>
+        {% else %}
+        <input id="ImageElement" class="mt-1" type="image" src="/media/nav_buttons/unliked.svg" height="17" width="17" onclick="toggleLike()"/>
+        {% endif %}
+        <a id=likeCount class="black-link-plain" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} Likes</a>  </br>
+        <p>
+          <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
+          {{ post.caption }}
+        </p>
+      </div>
+      <div class="comment">
+        {% for comment in post.comments.all %}
+        <p>
+          <a class="black-link" href="{% url 'photo_blog-profile' comment.author.username %}">{{ comment.author }}</a>
+          {{ comment.text }} </br>
+          <small>{{ comment.date_posted|date:'F d, Y' }}</small>
+        </p>
+          {% empty %}
+          There are no comments on this post.
+        {% endfor %}
+      </div>
+      <div>
+        <a href="{% url 'photo_blog-comment' post.id %}">Add Comment</a>
+      </div>
+      <div>
+        <small>{{ post.date_posted|date:'F d, Y' }}</small>
+      </div>
+      <div>
+        {% if post.author == user %}
+        <a class ="btn btn-danger" href="{% url 'photo_blog-delete' post.id %}">Delete Post</a>
+        <a class ="btn btn-secondary" href="{% url 'photo_blog-update' post.id %}">Update Post</a>
+        {% endif %}
+      </div>
+  </article>
+</div>
+{% endblock %}

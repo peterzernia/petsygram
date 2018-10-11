@@ -1,0 +1,57 @@
+{% extends "photo_blog/base.html" %}
+{% block content %}
+
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    onBeforePageLoad: function () {
+      $('.loading').show();
+    },
+    onAfterPageLoad: function ($items) {
+      $('.loading').hide();
+    }
+  });
+</script>
+
+<div class="content">
+  {% for post in object_list %}
+  {% if post.author != user and user in post.author.profile.followers.all %}
+  <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <div>
+            <img class='rounded-circle article-img'src="{{ post.author.profile.image.url }}" height="50" width="50">
+            <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
+            {% if post.location %}
+            <small>{{post.location}}</small>
+            {% endif %}
+          </div>
+          <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
+          {% if user not in post.likes.all %}
+            <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
+          {% else %}
+            <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
+          {% endif %}
+          {{post.likes.count}} <a class="black-link-plain" href="{% url 'photo_blog-post_likes' post.id %}">Likes</a> </br>
+          <p>
+            <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
+            {{ post.caption }}
+          </p>
+          <a href="{% url 'photo_blog-detail' post.id %}">View Comments</a>
+          <p><small>{{ post.date_posted|date:'F d, Y' }}</small></p>
+        </div>
+      </div>
+  </article>
+  {% endif %}
+  {% endfor %}
+  <div>
+    {% if page_obj.has_previous %}
+      <a class="infinite-more-link" href="?page={{ page_obj.previous_page_number }}">Less</a>
+    {% endif %}
+    {% if page_obj.has_next %}
+      <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">More</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

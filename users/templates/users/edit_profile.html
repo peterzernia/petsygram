@@ -1,0 +1,26 @@
+{% extends "photo_blog/base.html" %}
+{% load material_form %}
+{% block content %}
+
+<div class="media">
+    <img class="mx-auto rounded-circle" src="{{ user.profile.image.url }}">
+</div>
+<div>
+</div>
+<div class="form">
+  <p style="margin-top">
+    <form method="POST"  enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset>
+        {% form form=user_form %}{% endform %}
+        {% form form=profile_form %}{% endform %}
+        <div class="right-align">
+          <button type="submit" name="_submit" class="btn">Update</button>
+        </div>
+      </fieldset>
+    </form>
+  </p>
+</div>
+
+
+{% endblock %}

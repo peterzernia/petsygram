@@ -1,0 +1,48 @@
+{% extends "photo_blog/base.html" %}
+{% block content %}
+
+<script type="text/javascript">
+  function toggleFollow(){
+        $.ajax({
+          url: "{% url 'user_follow' view.kwargs.username %}",
+          data: {},
+          dataType: "json",
+          success: function(data) {
+            $("#followCount").html(data.follower_count + ' Followers');
+            $('#followElement').replaceWith(data.button);
+          }
+        });
+  };
+</script>
+
+<div class="content">
+  <div class="">
+    {% with posts|first as post %}
+      <img class="rounded-circle" src="{{ post.author.profile.image.url }}">
+      <a id=followCount class="black-link-plain" href="{% url 'user_followers' view.kwargs.username %}">{{post.author.profile.followers.count}} Followers</a>
+      <h5>{{ view.kwargs.username }}</h5>
+      {% if post.author.profile.bio%}
+      <p>{{ post.author.profile.bio }}</p>
+      {% endif %}
+      <div>
+        <center>
+          {% if post.author == user %}
+            <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'edit_profile' %}">Edit Profile</a>
+            <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'logout' %}">Logout</a>
+          {% elif user in post.author.profile.followers.all %}
+            <button id="followElement" class="btn btn-secondary btn-sm mt-1 mb-1" onclick="toggleFollow()">Unfollow</button>
+          {% elif user not in post.author.profile.followers.all %}
+            <button id="followElement" class="btn btn-secondary btn-sm mt-1 mb-1" onclick="toggleFollow()">Follow</button>
+          {% endif %}
+        </center>
+      </div>
+    {% endwith %}
+  </div>
+  <div>
+    {% for post in posts %}
+    <a href="{% url 'photo_blog-detail' post.id %}"><img class="img-thumbnail" height="147" width="147" src="{{ post.photo.url }}"></a>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

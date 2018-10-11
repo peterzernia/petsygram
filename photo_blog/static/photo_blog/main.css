@@ -1,0 +1,55 @@
+.content {
+    max-width: 450px;
+    margin: auto;
+}
+
+.black-link{
+  color:black;
+  font-weight: bold;
+
+}
+
+.black-link-plain{
+  color:black;
+
+}
+
+.footer {
+
+    height:50px;
+    width: 100%;
+    background-color: white;
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    position: fixed;
+    bottom: 0pt;
+    left: 0pt;
+
+}
+
+.footer_contents {
+
+    height:24px;
+    width: 1000px;
+    margin:auto;
+
+}
+
+.button {
+  background-image: url(media/nav_buttons/unlike.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  /* put the height and width of your image here */
+  height: 17px;
+  width: 17px;
+  border: none;
+}
+
+.white-button{
+
+  background-color: transparent;
+  border-color: transparent;
+
+}

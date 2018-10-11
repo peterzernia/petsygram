@@ -1,0 +1,13 @@
+{% extends "photo_blog/base.html" %}
+{% block content %}
+
+
+<div class="content">
+  <img class='rounded-circle article-img mt-1' src="{{ object.sender.profile.image.url }}" height="50" width="50">
+  <a class="black-link" href="{% url 'photo_blog-profile' object.sender.username %}">{{ object.sender }}</a>
+  {{ object.date_sent }}
+  </br>
+  {{object.content}}
+</div>
+
+{% endblock %}

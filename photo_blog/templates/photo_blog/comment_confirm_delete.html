@@ -1,0 +1,17 @@
+{% extends "photo_blog/base.html" %}
+{% block content %}
+
+<div>
+  <form method="POST">
+      {% csrf_token %}
+      <fieldset>
+        <h7>Are you sure you want to delete this comment?</h7>
+        <div>
+          <button class="btn btn-outline-danger" type="submit">Delete</button>
+          <a class="btn btn-outline-secondary" href="{% url 'photo_blog-detail' object.id %}">Cancel</a>
+        </div>
+      </fieldset>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "photo_blog/base.html" %}
+{% block content %}
+
+
+<div class="content">
+  <h3>Sent</h3>
+  </br>
+  </br>
+  {% if direct_messages %}
+    {% for direct_message in direct_messages reversed %}
+      <img class='rounded-circle article-img mt-1' src="{{ direct_message.receiver.profile.image.url }}" height="50" width="50">
+      <a class="black-link" href="{% url 'photo_blog-profile' direct_message.receiver.username %}">{{ direct_message.receiver }}</a>
+      {{ direct_message.date_sent }}
+      </br>
+      {{direct_message.content}}
+      </br>
+      <a class="nav-item nav-link" href="{% url 'direct_messages-delete' direct_message.id %}"><img src="/media/nav_buttons/trash.png" height="20" width="20"></a>
+      </br>
+      </br>
+    {% endfor %}
+  {% else %}
+      You haven't sent any messages yet
+  {% endif %}
+</div>
+
+{% endblock %}
