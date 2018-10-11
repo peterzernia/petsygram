@@ -1,9 +1,10 @@
 {% extends "photo_blog/base.html" %}
 {% block content %}
 
-
 <div class="content">
-  <h3>Inbox</h3>
+  <center>
+    <h3>Inbox | <a class="black-link-plain" href="{% url 'direct_messages-sent' %}">Sent</a></h3>
+  </center>
   <a href="{% url 'direct_messages-new' %}">New Message</a>
   </br>
   </br>

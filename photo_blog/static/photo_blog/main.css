@@ -1,15 +1,18 @@
 .content {
+
     max-width: 450px;
     margin: auto;
 }
 
 .black-link{
+
   color:black;
   font-weight: bold;
 
 }
 
 .black-link-plain{
+
   color:black;
 
 }
@@ -32,7 +35,7 @@
 .footer_contents {
 
     height:24px;
-    width: 1000px;
+    width: 100%;
     margin:auto;
 
 }
@@ -41,7 +44,6 @@
   background-image: url(media/nav_buttons/unlike.svg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  /* put the height and width of your image here */
   height: 17px;
   width: 17px;
   border: none;
@@ -51,5 +53,17 @@
 
   background-color: transparent;
   border-color: transparent;
+
+}
+
+.nav {
+
+  position: absolute;
+
+}
+
+.crop{
+
+  object-fit: cover;
 
 }

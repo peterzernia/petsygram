@@ -20,13 +20,9 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-fixed-lg navbar-transparent bg-transparent">
-      <div class="navbar">
-        <img class="" src="/media/logo.png">
-      </div>
-      <div class="">
-        <a class="nav-item nav-link" href="{% url 'direct_messages-inbox' %}"><img src="/media/nav_buttons/inbox.png" height="30" width="30"></a>
-      </div>
+    <nav class="navbar navbar-light bg-white sticky-top" style="min-width: 450px !important;">
+      <img class="navbar-brand" src="/media/logo.png">
+      <a class="nav-item inline" href="{% url 'direct_messages-inbox' %}"><img src="/media/nav_buttons/inbox.png" height="30" width="30"></a>
     </nav>
     <div class="content mt-3">
       {% if messages %}
@@ -42,29 +38,29 @@
     </br>
     </br>
 
-{% if user.is_authenticated %}
-    <div class="footer">
-      <div class="footer_contents">
-        <div class="navbar navbar-light">
-          <a class="nav-item nav-link" href="{% url 'photo_blog-home' %}"><img src="/media/nav_buttons/home.svg" height="30" width="30"></a>
-          <!-- Default dropup button -->
-          <div class="btn-group dropup">
-            <button type="button" class="white-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/media/nav_buttons/search.png" height="30" width="30"></button>
-            <div class="dropdown-menu">
-              <form method="GET" action="{% url 'search' %}">
-                <input type="text" placeholder="Search" name="q" value="{{ request.GET.q }}">
-                <input class="btn btn-light" type="submit" name="" value="Search">
-              </form>
+    {% if user.is_authenticated %}
+        <div class="footer">
+          <div class="footer_contents">
+            <div class="navbar navbar-default">
+              <a class="nav-item nav-link" href="{% url 'photo_blog-home' %}"><img src="/media/nav_buttons/home.svg" height="30" width="30"></a>
+              <!-- Default dropup button -->
+              <div class="btn-group dropup">
+                <button type="button" class="white-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/media/nav_buttons/search.png" height="30" width="30"></button>
+                <div class="dropdown-menu">
+                  <form method="GET" action="{% url 'search' %}">
+                    <input type="text" placeholder="Search" name="q" value="{{ request.GET.q }}">
+                    <input class="btn btn-light" type="submit" name="" value="Search">
+                  </form>
+                </div>
+              </div>
+              <!---End dropup menu---->
+              <a class="nav-item nav-link" href="{% url 'photo_blog-create'%}"><img src="/media/nav_buttons/post.svg" height="30" width="30"></a>
+              <a class="nav-item nav-link" href="#"><img src="/media/nav_buttons/notifications.svg" height="30" width="30"></a>
+              <a class="nav-item nav-link" href="{% url 'photo_blog-profile' user.username %}"><img src="/media/nav_buttons/profile.svg" height="30" width="30"></a>
             </div>
           </div>
-          <!---End dropup menu---->
-          <a class="nav-item nav-link" href="{% url 'photo_blog-create'%}"><img src="/media/nav_buttons/post.svg" height="30" width="30"></a>
-          <a class="nav-item nav-link" href="#"><img src="/media/nav_buttons/notifications.svg" height="30" width="30"></a>
-          <a class="nav-item nav-link" href="{% url 'photo_blog-profile' user.username %}"><img src="/media/nav_buttons/profile.svg" height="30" width="30"></a>
         </div>
-      </div>
-    </div>
-{% endif %}
+    {% endif %}
 
     {% include 'material/includes/material_css.html' %}
     {% include 'material/includes/material_js.html' %}

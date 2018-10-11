@@ -8,8 +8,8 @@
           data: {},
           dataType: "json",
           success: function(data) {
-            $("#likeCount").html(data.like_count + ' likes');
-            $('#ImageElement').replaceWith(data.img);
+            //$("#likeCount").html(data.like_count + ' likes');
+            //$('#imageElement').replaceWith(data.img);
             console.log(data);
           }
           });
@@ -30,11 +30,12 @@
         </div>
         <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
         {% if user in post.likes.all %}
-        <input id="ImageElement" class="mt-1" type="image" src="/media/nav_buttons/liked.svg" height="17" width="17" onclick="toggleLike()"/>
+          <a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
         {% else %}
-        <input id="ImageElement" class="mt-1" type="image" src="/media/nav_buttons/unliked.svg" height="17" width="17" onclick="toggleLike()"/>
+          <a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
         {% endif %}
-        <a id=likeCount class="black-link-plain" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} Likes</a>  </br>
+        <a href="{% url 'photo_blog-comment' post.id %}"><img src="/media/nav_buttons/comment.svg" height="17" width="17"></a></br>
+        <a id=likeCount class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} Likes</a>
         <p>
           <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
           {{ post.caption }}
@@ -44,8 +45,11 @@
         {% for comment in post.comments.all %}
         <p>
           <a class="black-link" href="{% url 'photo_blog-profile' comment.author.username %}">{{ comment.author }}</a>
-          {{ comment.text }} </br>
-          <small>{{ comment.date_posted|date:'F d, Y' }}</small>
+          {{ comment.text }}
+          {% if comment.author == user %}
+            <a href="{% url 'photo_blog-delete_comment' comment.id %}"><img src="/media/nav_buttons/trash.png" height="20" width="20"></a>
+          {% endif %}
+          </br><small>{{ comment.date_posted|date:'F d, Y' }}</small>
         </p>
           {% empty %}
           There are no comments on this post.

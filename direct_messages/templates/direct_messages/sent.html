@@ -3,7 +3,10 @@
 
 
 <div class="content">
-  <h3>Sent</h3>
+  <center>
+    <h3><a class="black-link-plain" href="{% url 'direct_messages-inbox' %}">Inbox</a> | Sent</h3>
+  </center>
+  <a href="{% url 'direct_messages-new' %}">New Message</a>
   </br>
   </br>
   {% if direct_messages %}

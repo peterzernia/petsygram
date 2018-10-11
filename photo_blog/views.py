@@ -111,17 +111,17 @@ class CreateComment(LoginRequiredMixin, CreateView):
 
 
 class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Post
+    model = Comment
     sucess_url = '/'
 
     def test_func(self):
-        post = self.get_object()
+        comment = self.get_object()
         if self.request.user == comment.author:
             return True
         return False
 
-    def get_object(self):
-         return get_object_or_404(Comment, pk=request.session['pk'])
+    def get_success_url(self, **kwargs):
+        return reverse('photo_blog-home')
 
 
 class LikePost(LoginRequiredMixin, RedirectView):
@@ -150,18 +150,18 @@ class LikePostAPI(APIView):
                 liked = False
                 obj.likes.remove(user)
                 like_count = obj.likes.count()
-                img = '<input id="ImageElement" class="mt-1" type="image" src="/media/nav_buttons/unliked.svg" height="17" width="17" onclick="toggleLike()"/>'
+                img = '<a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>'
             else:
                 liked = True
                 obj.likes.add(user)
                 like_count = obj.likes.count()
-                img = '<input id="ImageElement" class="mt-1" type="image" src="/media/nav_buttons/liked.svg" height="17" width="17" onclick="toggleLike()"/>'
+                img = '<a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>'
             updated = True
         data = {
             "updated": updated,
             "liked": liked,
             "like_count": like_count,
-            "img": img
+            #"img": img
         }
         return Response(data)
 

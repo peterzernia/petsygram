@@ -2,11 +2,13 @@
 {% load material_form %}
 {% block content %}
 
-
+<center>
+  <h3>Likes</h3>
+</center>
 {% for user in post.likes.all %}
-<img class='rounded-circle article-img mt-1' src="{{ user.profile.image.url }}" height="50" width="50">
-<a class="black-link" href="{% url 'photo_blog-profile' user %}">{{ user }}</a>
-</br>
+  <img class='rounded-circle article-img mt-1' src="{{ user.profile.image.url }}" height="50" width="50">
+  <a class="black-link" href="{% url 'photo_blog-profile' user %}">{{ user }}</a>
+  </br>
 {% endfor %}
 
 {% endblock %}

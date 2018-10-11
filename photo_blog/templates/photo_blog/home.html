@@ -1,17 +1,6 @@
 {% extends "photo_blog/base.html" %}
 {% block content %}
 
-<script>
-  var infinite = new Waypoint.Infinite({
-    element: $('.infinite-container')[0],
-    onBeforePageLoad: function () {
-      $('.loading').show();
-    },
-    onAfterPageLoad: function ($items) {
-      $('.loading').hide();
-    }
-  });
-</script>
 
 <div class="content">
   {% for post in object_list %}
@@ -23,21 +12,50 @@
             <img class='rounded-circle article-img'src="{{ post.author.profile.image.url }}" height="50" width="50">
             <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
             {% if post.location %}
-            <small>{{post.location}}</small>
+              <small>{{ post.location }}</small>
             {% endif %}
           </div>
           <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
-          {% if user not in post.likes.all %}
-            <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
+
+
+          <script type="text/javascript">
+            function toggleLike(){
+                  $.ajax({
+                    url: "{% url 'photo_blog-post_like_api' post.id %}",
+                    data: {},
+                    dataType: "json",
+                    success: function(data) {
+                      $("#likeCount").html(data.like_count + ' likes');
+                      $('#imageElement').replaceWith(data.img);
+                      console.log(data);
+                    }
+                    });
+                };
+          </script>
+
+
+          {% if user in post.likes.all %}
+            <a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
           {% else %}
-            <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
+            <a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
           {% endif %}
-          {{post.likes.count}} <a class="black-link-plain" href="{% url 'photo_blog-post_likes' post.id %}">Likes</a> </br>
+          <a href="{% url 'photo_blog-comment' post.id %}"><img src="/media/nav_buttons/comment.svg" height="17" width="17"></a></br>
+          <a id=likeCount class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} Likes</a>
+
+
           <p>
             <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
             {{ post.caption }}
           </p>
-          <a href="{% url 'photo_blog-detail' post.id %}">View Comments</a>
+          {% if post.comments.all %}
+            <p>
+              <a class="black-link" href="{% url 'photo_blog-profile' post.comments.first.author.username %}">{{ post.comments.first.author }}</a>
+              {{ post.comments.first|truncatechars:50 }}
+            </p>
+          {% endif %}
+          {% if post.comments.all %}
+            <a href="{% url 'photo_blog-detail' post.id %}">View Comments</a>
+          {% endif %}
           <p><small>{{ post.date_posted|date:'F d, Y' }}</small></p>
         </div>
       </div>
