@@ -3,7 +3,7 @@ from .models import Post, Comment
 from django.apps import apps
 from django.contrib.auth.models import User
 from django.views.generic import (
-    ListView, DetailView, RedirectView,
+    ListView, DetailView,
     CreateView, UpdateView, DeleteView
     )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -124,17 +124,6 @@ class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return reverse('photo_blog-home')
 
 
-class LikePost(LoginRequiredMixin, RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        obj = get_object_or_404(Post, id=self.kwargs.get('pk'))
-        user = self.request.user
-        if user.is_authenticated:
-            if user in obj.likes.all():
-                obj.likes.remove(user)
-            else:
-                obj.likes.add(user)
-        return obj.get_absolute_url()
-
 
 class LikePostAPI(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
@@ -150,18 +139,18 @@ class LikePostAPI(APIView):
                 liked = False
                 obj.likes.remove(user)
                 like_count = obj.likes.count()
-                img = '<a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>'
+                img = '<img src="/media/nav_buttons/unliked.svg" height="17" width="17">'
             else:
                 liked = True
                 obj.likes.add(user)
                 like_count = obj.likes.count()
-                img = '<a id="imageElement" onclick="toggleLike()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>'
+                img = '<img src="/media/nav_buttons/liked.svg" height="17" width="17">'
             updated = True
         data = {
             "updated": updated,
             "liked": liked,
             "like_count": like_count,
-            #"img": img
+            "img": img
         }
         return Response(data)
 

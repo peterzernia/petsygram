@@ -3,7 +3,7 @@ from . import views
 from .views import (
 Home, ViewPost, CreatePost,
 UpdatePost,DeletePost, ViewProfile,
-CreateComment,DeleteComment, LikePost,
+CreateComment,DeleteComment,
 LikePostAPI, ViewLikes
 )
 
@@ -18,7 +18,6 @@ urlpatterns = [
     path('user/<str:username>/', ViewProfile.as_view(), name='photo_blog-profile'),
     path('post/<int:pk>/comment/', CreateComment.as_view(), name='photo_blog-comment'),
     path('comment/<int:pk>/delete/', DeleteComment.as_view(), name='photo_blog-delete_comment'),
-    path('post/<int:pk>/like/', LikePost.as_view(), name='photo_blog-post_like'),
     path('post/<int:pk>/like_api/', LikePostAPI.as_view(), name='photo_blog-post_like_api'),
     path('post/<int:pk>/likes/', ViewLikes.as_view(), name='photo_blog-post_likes'),
 ]

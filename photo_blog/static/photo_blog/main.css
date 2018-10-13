@@ -1,3 +1,9 @@
+body {
+
+  min-width: 600px;
+
+}
+
 .content {
 
     max-width: 450px;
