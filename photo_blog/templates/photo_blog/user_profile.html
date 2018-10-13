@@ -5,11 +5,9 @@
   function toggleFollow(){
         $.ajax({
           url: "{% url 'user_follow' view.kwargs.username %}",
-          data: {},
-          dataType: "json",
           success: function(data) {
             $("#followCount").html(data.follower_count + ' Followers');
-            $('#followElement').replaceWith(data.button);
+            $('#followElement').html(data.button);
           }
         });
   };

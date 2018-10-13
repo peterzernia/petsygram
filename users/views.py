@@ -64,12 +64,12 @@ class FollowUser(APIView):
                 followed = False
                 prof_obj.followers.remove(authenticated_user)
                 follower_count = prof_obj.followers.count()
-                button = '<button id="followElement" class="btn btn-secondary btn-sm mt-1 mb-1" onclick="toggleFollow()">Follow</button>'
+                button = 'Follow'
             else:
                 followed = True
                 prof_obj.followers.add(authenticated_user)
                 follower_count = prof_obj.followers.count()
-                button = '<button id="followElement" class="btn btn-secondary btn-sm mt-1 mb-1" onclick="toggleFollow()">Unfollow</button>'
+                button = 'Unfollow'
             updated = True
         data = {
             "updated": updated,

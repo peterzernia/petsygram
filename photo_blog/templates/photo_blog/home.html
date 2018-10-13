@@ -26,7 +26,6 @@
                         success: function(data) {
                           $("#likeCount{{post.id}}").html(data.like_count + ' likes');
                           $('#imageElement{{post.id}}').html(data.img);
-                          console.log(data);
                         }
                         });
                     };
