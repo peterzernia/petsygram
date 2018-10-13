@@ -2,17 +2,8 @@
 {% block content %}
 
 <script type="text/javascript">
-  function toggleFollow(){
-        $.ajax({
-          url: "{% url 'user_follow' view.kwargs.username %}",
-          success: function(data) {
-            $("#followCount").html(data.follower_count + ' Followers');
-            $('#followElement').html(data.button);
-          }
-        });
-  };
+  window.USER_FOLLOW_URL = "{% url 'user_follow' view.kwargs.username %}";
 </script>
-
 <div class="content">
   <div class="">
     {% with posts|first as post %}

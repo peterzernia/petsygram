@@ -1,18 +1,10 @@
 {% extends "photo_blog/base.html" %}
 {% block content %}
 
-<script>
-function toggleLike{{post.id}}(){
-      $.ajax({
-        url: "{% url 'photo_blog-post_like_api' post.id %}",
-        success: function(data) {
-          $("#likeCount{{post.id}}").html(data.like_count + ' likes');
-          $('#imageElement{{post.id}}').html(data.img);
-        }
-        });
-    };
+<script type="text/javascript">
+  window.USER_LIKE_URL = "{% url 'photo_blog-post_like_api' post.id %}";
+  window.POST_ID = "{{post.id}}"
 </script>
-
 <div class="content">
   <article class="media content-section">
     <div class="media-body">
@@ -26,9 +18,9 @@ function toggleLike{{post.id}}(){
         </div>
         <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
         {% if user in post.likes.all %}
-          <a id=imageElement{{post.id}}  onclick="toggleLike{{post.id}}()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
+          <a id=imageElement{{post.id}}  onclick="toggleLike()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
         {% else %}
-          <a id=imageElement{{post.id}}  onclick="toggleLike{{post.id}}()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
+          <a id=imageElement{{post.id}}  onclick="toggleLike()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
         {% endif %}
         <a href="{% url 'photo_blog-comment' post.id %}"><img src="/media/nav_buttons/comment.svg" height="17" width="17"></a></br>
         <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} likes</a>

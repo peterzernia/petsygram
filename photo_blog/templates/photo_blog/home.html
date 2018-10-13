@@ -1,10 +1,12 @@
 {% extends "photo_blog/base.html" %}
 {% block content %}
 
-
-
 <div class="content">
   {% for post in object_list %}
+  <script type="text/javascript">
+    window.USER_LIKE_URL = "{% url 'photo_blog-post_like_api' post.id %}";
+    window.POST_ID = "{{post.id}}"
+  </script>
     {% if post.author != user and user in post.author.profile.followers.all %}
       <article class="media content-section">
           <div class="media-body">
@@ -39,8 +41,6 @@
               {% endif %}
               <a href="{% url 'photo_blog-comment' post.id %}"><img src="/media/nav_buttons/comment.svg" height="17" width="17"></a></br>
               <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} likes</a>
-
-
               <p>
                 <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
                 {{ post.caption }}
