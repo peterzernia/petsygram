@@ -8,7 +8,7 @@ function toggleFollow(){
       });
 };
 
-function "window.POST_ID"(){
+function toggleLike(){
       $.ajax({
         url: window.USER_LIKE_URL,
         success: function(data) {

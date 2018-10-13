@@ -19,12 +19,12 @@
         {% endif %}
         </br>
         {% if post.author == user %}
-          <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'edit_profile' %}">Edit Profile</a>
-          <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'logout' %}">Logout</a>
+          <a class='btn' href="{% url 'edit_profile' %}">Edit Profile</a>
+          <a class='btn' href="{% url 'logout' %}">Logout</a>
         {% elif user in post.author.profile.followers.all %}
-          <button id="followElement" class="btn btn-secondary btn-sm mt-1 mb-1" onclick="toggleFollow()">Unfollow</button>
+          <button id="followElement" class="btn" onclick="toggleFollow()">Unfollow</button>
         {% elif user not in post.author.profile.followers.all %}
-          <button id="followElement" class="btn btn-secondary btn-sm mt-1 mb-1" onclick="toggleFollow()">Follow</button>
+          <button id="followElement" class="btn" onclick="toggleFollow()">Follow</button>
         {% endif %}
       </center>
     {% endwith %}
@@ -37,8 +37,8 @@
   </div>
 </div>
 {% if post.author == user %}
-  <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'edit_profile' %}">Edit Profile</a>
-  <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'logout' %}">Logout</a>
+  <a class='btn' href="{% url 'edit_profile' %}">Edit Profile</a>
+  <a class='btn' href="{% url 'logout' %}">Logout</a>
 {% endif %}
 
 {% endblock %}
