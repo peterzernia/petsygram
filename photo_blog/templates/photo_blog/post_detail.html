@@ -60,7 +60,7 @@ function toggleLike{{post.id}}(){
       <div>
         {% if post.author == user %}
         <a class ="btn btn-danger" href="{% url 'photo_blog-delete' post.id %}">Delete Post</a>
-        <a class ="btn btn-secondary" href="{% url 'photo_blog-update' post.id %}">Update Post</a>
+        <a class ="btn btn-secondary" href="{% url 'photo_blog-update' post.id %}">Edit Post</a>
         {% endif %}
       </div>
   </article>
