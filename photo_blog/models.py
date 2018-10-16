@@ -14,9 +14,8 @@ def get_image_path(instance, filename):
 class Post(models.Model):
     photo = models.ImageField(upload_to=get_image_path, null=True, blank=True)
     caption = models.TextField(max_length=2200, null=True, blank=True)
-    # hashtags = models....
     date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     location = models.CharField(max_length=100, blank=True)
     likes = models.ManyToManyField(User, blank=True, related_name='post_likes')
 
@@ -34,7 +33,7 @@ class Post(models.Model):
 
         img = Image.open(self.photo.path)
 
-        output_size = (450, (img.height / img.width) * 450,)
+        output_size = (450, (img.height / img.width) * 450)
         img.thumbnail(output_size)
         img.save(self.photo.path)
 

@@ -6,39 +6,36 @@
 </script>
 <div class="content">
   <div class="">
-    {% with posts|first as post %}
+    {% for author in object_list %}
       <center>
-        <img class="rounded-circle" src="{{ post.author.profile.image.url }}">
+        <img class="rounded-circle" src="{{ author.profile.image.url }}">
         <h5>{{ view.kwargs.username }}</h5>
-        <a id=followCount class="black-link" href="{% url 'user_followers' view.kwargs.username %}">{{post.author.profile.followers.count}} Followers</a></br>
-        {% if post.author.profile.bio %}
-          {{ post.author.profile.bio }}</br>
+        <a id=followCount class="black-link" href="{% url 'user_followers' view.kwargs.username %}">{{author.profile.followers.count}} Followers</a></br>
+        {% if author.profile.bio %}
+          {{ author.profile.bio }}</br>
         {% endif %}
-        {% if post.author.profile.website %}
-          <a href="{{ post.author.profile.website }}">{{ post.author.profile.website }}</a></br>
+        {% if author.profile.website %}
+          <a href="{{ author.profile.website }}">{{ author.profile.website }}</a></br>
         {% endif %}
         </br>
-        {% if post.author == user %}
+        {% if view.kwargs.username == user.username %}
           <a class='btn' href="{% url 'edit_profile' %}">Edit Profile</a>
           <a class='btn' href="{% url 'logout' %}">Logout</a>
-        {% elif user in post.author.profile.followers.all %}
+        {% elif user in author.profile.followers.all %}
           <button id="followElement" class="btn" onclick="toggleFollow()">Unfollow</button>
-        {% elif user not in post.author.profile.followers.all %}
+        {% elif user not in author.profile.followers.all %}
           <button id="followElement" class="btn" onclick="toggleFollow()">Follow</button>
         {% endif %}
       </center>
-    {% endwith %}
-  </div>
-  </br>
-  <div>
-    {% for post in posts %}
-    <a href="{% url 'photo_blog-detail' post.id %}"><img class="crop" width="147" height="147" src="{{ post.photo.url }}"></a>
-    {% endfor %}
-  </div>
+    </div>
+    </br>
+    <div>
+      {% for post in author.posts.all reversed %}
+      <a href="{% url 'photo_blog-detail' post.id %}"><img class="crop" width="147" height="147" src="{{ post.photo.url }}"></a>
+      {% endfor %}
+    </div>
+  {% endfor %}
 </div>
-{% if post.author == user %}
-  <a class='btn' href="{% url 'edit_profile' %}">Edit Profile</a>
-  <a class='btn' href="{% url 'logout' %}">Logout</a>
-{% endif %}
+
 
 {% endblock %}
