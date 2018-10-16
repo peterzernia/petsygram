@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 
 
@@ -60,10 +60,20 @@ class Comment(models.Model):
 class Notification(models.Model):
     post = models.ForeignKey('photo_blog.Post', on_delete=models.CASCADE, null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
-    date_posted = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    liked = models.BooleanField(default=False)
+    date_posted = models.DateTimeField(null=True, blank=True)
 
 
 @receiver(post_save, sender=Comment)
 def auto_create_comment_notification(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(post=instance.post, comment=instance, date_posted=instance.date_posted)
+
+
+@receiver(m2m_changed, sender=Post.likes.through)
+def auto_create_like_notification(sender, instance, action, **kwargs):
+    if action == "post_add":
+        post = instance.likes.all()
+        Notification.objects.create(post=instance, user=instance.likes.through.objects.last().user, liked=True)
+    

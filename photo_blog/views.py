@@ -169,4 +169,3 @@ class ViewLikes(LoginRequiredMixin, ListView):
 class ViewNotifications(LoginRequiredMixin, ListView):
     model = Notification
     template_name = 'photo_blog/notifications.html'
-    ordering = ['-date_posted']

@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="content">
-{% for notification in object_list %}
+{% for notification in object_list reversed %}
   {% if notification.comment %}
     {% if notification.post.author == user %}
       <div class="media-body">
@@ -19,8 +19,22 @@
         </div>
       </div>
     {% endif %}
-  {% endif %}
-  {% if notification.like %}
+  {% elif notification.liked %}
+    {% if notification.post.author == user %}
+      {% if notification.user != user %}
+        <div class="media-body">
+          <div class="article-metadata">
+            <img class='rounded-circle article-img'src="{{ notification.user.profile.image.url }}" height="50" width="50">
+            <a class="black-link" href="{% url 'photo_blog-profile' notification.user.username %}">{{ notification.user }}</a>
+            liked your
+            <a class="black-link" href="{% url 'photo_blog-detail' notification.post.id %}">post.</a>
+            </br>
+            </br>
+            </br>
+          </div>
+        </div>
+      {% endif %}  
+    {% endif %}
   {% endif %}
 {% endfor %}
 </div>
