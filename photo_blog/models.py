@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 def get_image_path(instance, filename):
@@ -53,3 +55,15 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('photo_blog-comment', kwargs={'pk': self.pk})
+
+
+class Notification(models.Model):
+    post = models.ForeignKey('photo_blog.Post', on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
+    date_posted = models.DateTimeField()
+
+
+@receiver(post_save, sender=Comment)
+def auto_create_comment_notification(sender, instance, created, **kwargs):
+    if created:
+        Notification.objects.create(post=instance.post, comment=instance, date_posted=instance.date_posted)

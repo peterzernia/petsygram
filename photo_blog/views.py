@@ -1,5 +1,5 @@
 from django.shortcuts import render, reverse, get_object_or_404
-from .models import Post, Comment
+from .models import Post, Comment, Notification
 from django.apps import apps
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -164,3 +164,9 @@ class ViewLikes(LoginRequiredMixin, ListView):
     def get_queryset(self):
         post = get_object_or_404(Post, id=self.kwargs.get('pk'))
         return post
+
+
+class ViewNotifications(LoginRequiredMixin, ListView):
+    model = Notification
+    template_name = 'photo_blog/notifications.html'
+    ordering = ['-date_posted']

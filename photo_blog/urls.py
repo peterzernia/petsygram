@@ -4,7 +4,7 @@ from .views import (
 Home, ViewPost, CreatePost,
 UpdatePost,DeletePost, ViewProfile,
 CreateComment,DeleteComment,
-LikePostAPI, ViewLikes
+LikePostAPI, ViewLikes, ViewNotifications
 )
 
 
@@ -20,4 +20,5 @@ urlpatterns = [
     path('comment/<int:pk>/delete/', DeleteComment.as_view(), name='photo_blog-delete_comment'),
     path('post/<int:pk>/like_api/', LikePostAPI.as_view(), name='photo_blog-post_like_api'),
     path('post/<int:pk>/likes/', ViewLikes.as_view(), name='photo_blog-post_likes'),
+    path('notifications/', ViewNotifications.as_view(), name='photo_blog-notifications'),
 ]
