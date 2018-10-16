@@ -9,12 +9,15 @@
         <div class="article-metadata">
           <img class='rounded-circle article-img'src="{{ notification.comment.author.profile.image.url }}" height="50" width="50">
           <a class="black-link" href="{% url 'photo_blog-profile' notification.comment.author.username %}">{{ notification.comment.author }}</a>
-          commented
-          "{{ notification.comment.text }}"
-          on your
-          <a class="black-link" href="{% url 'photo_blog-detail' notification.post.id %}">post.</a>
+          commented at {{ notification.comment.date_posted }}:
+          <p class="ml-5">
+            "{{ notification.comment.text }}"
+            on your
+            <a class="black-link" href="{% url 'photo_blog-detail' notification.post.id %}">post.</a>
+          </p>
           </br>
-          </br>
+        </div>
+      </div>
     {% endif %}
   {% endif %}
   {% if notification.like %}
