@@ -1,26 +1,26 @@
 from django.shortcuts import render, reverse
 from .models import DirectMessage
-from django.views.generic import CreateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
-def inbox(request):
-    direct_messages = DirectMessage.objects.filter(receiver=request.user)
-    context ={
-        'direct_messages': direct_messages
-    }
-    return render(request, 'direct_messages/inbox.html', context)
+class InboxView(LoginRequiredMixin, ListView):
+    model = DirectMessage
+    template_name = 'direct_messages/inbox.html'
+
+    def get_queryset(self):
+        direct_messages = DirectMessage.objects.filter(receiver=self.request.user)
+        return direct_messages
 
 
-@login_required
-def sent(request):
-    direct_messages = DirectMessage.objects.filter(sender=request.user)
-    context ={
-        'direct_messages': direct_messages
-    }
-    return render(request, 'direct_messages/sent.html', context)
+class SentView(LoginRequiredMixin, ListView):
+    model = DirectMessage
+    template_name = 'direct_messages/inbox.html'
+
+    def get_queryset(self):
+        direct_messages = DirectMessage.objects.filter(sender=self.request.user)
+        return direct_messages
 
 
 class CreateDirectMessage(LoginRequiredMixin, CreateView):
