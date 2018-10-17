@@ -9,7 +9,7 @@
   </br>
   </br>
   {% if object_list %}
-    {% for direct_message in object_list reversed %}
+    {% for direct_message in object_list %}
       <img class='rounded-circle article-img mt-1' src="{{ direct_message.sender.profile.image.url }}" height="50" width="50">
       <a class="black-link" href="{% url 'photo_blog-profile' direct_message.sender.username %}">{{ direct_message.sender }}</a>
       {{ direct_message.date_sent }}

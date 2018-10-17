@@ -11,15 +11,17 @@ class InboxView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         direct_messages = DirectMessage.objects.filter(receiver=self.request.user)
+        direct_messages = direct_messages.order_by('-date_sent')
         return direct_messages
 
 
 class SentView(LoginRequiredMixin, ListView):
     model = DirectMessage
-    template_name = 'direct_messages/inbox.html'
+    template_name = 'direct_messages/sent.html'
 
     def get_queryset(self):
         direct_messages = DirectMessage.objects.filter(sender=self.request.user)
+        direct_messages = direct_messages.order_by('-date_sent')
         return direct_messages
 
 
