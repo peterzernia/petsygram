@@ -178,3 +178,10 @@ class ViewLikes(LoginRequiredMixin, ListView):
 class ViewNotifications(LoginRequiredMixin, ListView):
     model = Notification
     template_name = 'photo_blog/notifications.html'
+
+    def get_queryset(self):
+        object_list = Notification.objects.filter(
+        Q(profile_id=self.request.user.id) |
+        ~Q(user=self.request.user)
+        )
+        return object_list

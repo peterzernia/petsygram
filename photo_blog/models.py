@@ -71,7 +71,8 @@ class Notification(models.Model):
 @receiver(post_save, sender=Comment)
 def auto_create_comment_notification(sender, instance, created, **kwargs):
     if created:
-        Notification.objects.create(post=instance.post, comment=instance, date_posted=instance.date_posted)
+        if instance.author != instance.post.author:
+            Notification.objects.create(post=instance.post, comment=instance, date_posted=instance.date_posted)
 
 
 @receiver(m2m_changed, sender=Post.likes.through)
@@ -85,12 +86,10 @@ def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
 
 
 @receiver(m2m_changed, sender=Profile.followers.through)
-def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
+def auto_create_follow_notification(sender, instance, action, pk_set, **kwargs):
     if action == "post_add":
         Notification.objects.create(profile=instance, user=instance.followers.through.objects.last().user, followed=True)
-        print('notification made')
     if action == "post_remove":
         for num in pk_set:
             pk = num
-        print('notification deleted')
         Notification.objects.filter(user_id=pk, profile=instance).delete()
