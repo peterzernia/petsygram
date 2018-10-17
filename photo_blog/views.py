@@ -121,7 +121,8 @@ class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
     def get_success_url(self, **kwargs):
-        return reverse('photo_blog-home')
+        pk = self.object.post.pk
+        return reverse( 'photo_blog-detail', args={pk: 'pk'})
 
 
 
