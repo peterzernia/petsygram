@@ -34,7 +34,7 @@ def search(request):
                 ).distinct()
         else:
             Profile = apps.get_model('users', 'Profile')
-            queryset_list = Profile.objects.filter()
+            queryset_list = Profile.objects.all()
             queryset_list = queryset_list.filter(
                 Q(user__username__icontains=query)
                 ).distinct()

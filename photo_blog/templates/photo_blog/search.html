@@ -22,12 +22,28 @@
               {% endif %}
             </div>
             <img class="img-fluid img-thumbnail" src="{{ post.photo.url }}">
-            {% if user not in post.likes.all %}
-              <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
+
+            <script type="text/javascript">
+              function toggleLike{{post.id}}(){
+                    $.ajax({
+                      url: "{% url 'photo_blog-post_like_api' post.id %}",
+                      success: function(data) {
+                        $("#likeCount{{post.id}}").html(data.like_count + ' likes');
+                        $('#imageElement{{post.id}}').html(data.img);
+                      }
+                      });
+                  };
+            </script>
+
+            {% if user in post.likes.all %}
+              <a id=imageElement{{post.id}}  onclick="toggleLike{{post.id}}()"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
             {% else %}
-              <a href="{% url 'photo_blog-post_like' post.id %}"><img src="/media/nav_buttons/liked.svg" height="17" width="17"></a>
+              <a id=imageElement{{post.id}}  onclick="toggleLike{{post.id}}()"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
             {% endif %}
-            {{post.likes.count}} <a class="black-link-plain" href="{% url 'photo_blog-post_likes' post.id %}">Likes</a> </br>
+            <a href="{% url 'photo_blog-comment' post.id %}"><img src="/media/nav_buttons/comment.svg" height="17" width="17"></a></br>
+            <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} likes</a>
+            <p>
+              <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
             <p>
               <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
               {{ post.caption }}
