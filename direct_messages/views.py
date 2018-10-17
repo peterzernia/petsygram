@@ -14,6 +14,7 @@ class InboxView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         direct_messages = DirectMessage.objects.filter(receiver=self.request.user)
+        # Use distinct when migrated to Postgres database
         direct_messages = direct_messages.order_by('sender_id', '-date_sent')#.distinct('sender_id')
         return direct_messages
 

@@ -75,3 +75,7 @@ def auto_create_comment_notification(sender, instance, created, **kwargs):
 def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
     if action == "post_add":
         Notification.objects.create(post=instance, user=instance.likes.through.objects.last().user, liked=True)
+    if action == "post_remove":
+        for num in pk_set:
+            pk = num
+        Notification.objects.filter(user_id=pk, post=instance).delete()
