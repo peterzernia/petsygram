@@ -10,7 +10,7 @@ function toggleFollow(){
 
 function toggleLike(post_id){
       $.ajax({
-        url: window.USER_LIKE_URL,
+        url: "/post/" + post_id + "/like_api",
         success: function(data) {
           $("#likeCount" + post_id).html(data.like_count + ' likes');
           $("#imageElement" + post_id).html(data.img);
