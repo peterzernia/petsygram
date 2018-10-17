@@ -17,7 +17,11 @@ class Home(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'photo_blog/home.html'
     ordering = ['-date_posted']
-    #paginate_by = 4
+    paginate_by = 4
+
+    def get_queryset(self):
+        queryset = Post.objects.all()
+        return queryset
 
 
 def search(request):
