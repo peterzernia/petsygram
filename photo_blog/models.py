@@ -73,6 +73,7 @@ def auto_delete_file_on_post_delete(sender, instance, **kwargs):
     if instance.photo:
         if os.path.isfile(instance.photo.path):
             os.remove(instance.photo.path)
+            
 
 @receiver(post_save, sender=Comment)
 def auto_create_comment_notification(sender, instance, created, **kwargs):
