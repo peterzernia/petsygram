@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from django.urls import reverse
 from django.conf import settings
-from django.db.models.signals import post_save, m2m_changed
+from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.dispatch import receiver
 
 
@@ -67,6 +67,12 @@ class Notification(models.Model):
     followed = models.BooleanField(default=False, null=True)
     date_posted = models.DateTimeField(null=True, blank=True)
 
+
+@receiver(post_delete, sender=Post)
+def auto_delete_file_on_post_delete(sender, instance, **kwargs):
+    if instance.photo:
+        if os.path.isfile(instance.photo.path):
+            os.remove(instance.photo.path)
 
 @receiver(post_save, sender=Comment)
 def auto_create_comment_notification(sender, instance, created, **kwargs):
