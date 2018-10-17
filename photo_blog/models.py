@@ -3,6 +3,7 @@ from PIL import Image
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from users.models import Profile
 from django.urls import reverse
 from django.conf import settings
 from django.db.models.signals import post_save, m2m_changed
@@ -61,7 +62,9 @@ class Notification(models.Model):
     post = models.ForeignKey('photo_blog.Post', on_delete=models.CASCADE, null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    liked = models.BooleanField(default=False)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    liked = models.BooleanField(default=False, null=True)
+    followed = models.BooleanField(default=False, null=True)
     date_posted = models.DateTimeField(null=True, blank=True)
 
 
@@ -79,3 +82,15 @@ def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
         for num in pk_set:
             pk = num
         Notification.objects.filter(user_id=pk, post=instance).delete()
+
+
+@receiver(m2m_changed, sender=Profile.followers.through)
+def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
+    if action == "post_add":
+        Notification.objects.create(profile=instance, user=instance.followers.through.objects.last().user, followed=True)
+        print('notification made')
+    if action == "post_remove":
+        for num in pk_set:
+            pk = num
+        print('notification deleted')
+        Notification.objects.filter(user_id=pk, profile=instance).delete()
