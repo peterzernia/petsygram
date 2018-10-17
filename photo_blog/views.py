@@ -16,19 +16,23 @@ from django.db.models import Q
 class Home(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'photo_blog/home.html'
-    ordering = ['-date_posted']
     paginate_by = 4
 
     def get_queryset(self):
-        queryset = Post.objects.all()
-        return queryset
+        following = []
+        pk = self.request.user
+        for user in User.objects.all():
+            if pk in user.profile.followers.all():
+                following.append(user.pk)
+        object_list = Post.objects.filter(author_id__in=following).order_by('-date_posted')
+        return object_list
 
 
 def search(request):
-    queryset_list = Post.objects.all()
     query = request.GET.get('q')
     if query:
         if query.startswith('#'):
+            queryset_list = Post.objects.all()
             queryset_list = queryset_list.filter(
                 Q(caption__icontains=query)
                 ).distinct()
