@@ -72,8 +72,6 @@ def auto_create_comment_notification(sender, instance, created, **kwargs):
 
 
 @receiver(m2m_changed, sender=Post.likes.through)
-def auto_create_like_notification(sender, instance, action, **kwargs):
+def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
     if action == "post_add":
-        post = instance.likes.all()
         Notification.objects.create(post=instance, user=instance.likes.through.objects.last().user, liked=True)
-    
