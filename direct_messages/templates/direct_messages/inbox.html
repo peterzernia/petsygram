@@ -3,7 +3,7 @@
 
 <div class="content">
   <center>
-    <h3>Inbox | <a class="black-link-plain" href="{% url 'direct_messages-sent' %}">Sent</a></h3>
+    <h4>Direct Messages</h4>
   </center>
   <a href="{% url 'direct_messages-new' %}">New Message</a>
   </br>
@@ -11,12 +11,7 @@
   {% if object_list %}
     {% for direct_message in object_list %}
       <img class='rounded-circle article-img mt-1' src="{{ direct_message.sender.profile.image.url }}" height="50" width="50">
-      <a class="black-link" href="{% url 'photo_blog-profile' direct_message.sender.username %}">{{ direct_message.sender }}</a>
-      {{ direct_message.date_sent }}
-      </br>
-      {{direct_message.content}}
-      </br>
-      <a class="nav-item nav-link" href="{% url 'direct_messages-delete' direct_message.id %}"><img src="/media/nav_buttons/trash.png" height="20" width="20"></a>
+      <a class="black-link" href="{% url 'direct_messages-thread' direct_message.sender.username %}">{{ direct_message.sender }}</a>
       </br>
       </br>
     {% endfor %}
