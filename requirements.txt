@@ -1,5 +1,9 @@
+dj-database-url==0.5.0
 Django==2.1.2
 django-material==1.3.0
 djangorestframework==3.8.2
+gunicorn==19.9.0
 Pillow==5.3.0
+psycopg2==2.7.5
 pytz==2018.5
+whitenoise==4.1
