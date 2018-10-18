@@ -8,6 +8,7 @@ function toggleFollow(){
       });
 };
 
+
 function toggleLike(post_id){
       $.ajax({
         url: "/post/" + post_id + "/like_api",

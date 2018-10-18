@@ -15,7 +15,7 @@ def get_image_path(instance, filename):
 
 
 class Post(models.Model):
-    photo = models.ImageField(upload_to=get_image_path, null=True, blank=True)
+    photo = models.ImageField(upload_to=get_image_path, null=True, blank=False)
     caption = models.TextField(max_length=2200, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
@@ -73,7 +73,7 @@ def auto_delete_file_on_post_delete(sender, instance, **kwargs):
     if instance.photo:
         if os.path.isfile(instance.photo.path):
             os.remove(instance.photo.path)
-            
+
 
 @receiver(post_save, sender=Comment)
 def auto_create_comment_notification(sender, instance, created, **kwargs):

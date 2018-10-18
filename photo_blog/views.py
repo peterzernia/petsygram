@@ -29,6 +29,7 @@ class Home(LoginRequiredMixin, ListView):
 
 
 def search(request):
+    queryset_list = None
     query = request.GET.get('q')
     if query:
         if query.startswith('#'):

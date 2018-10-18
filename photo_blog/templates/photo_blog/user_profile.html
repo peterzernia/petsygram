@@ -30,9 +30,15 @@
     </div>
     </br>
     <div>
-      {% for post in author.posts.all reversed %}
-      <a href="{% url 'photo_blog-detail' post.id %}"><img class="crop" width="147" height="147" src="{{ post.photo.url }}"></a>
-      {% endfor %}
+      {% if author.posts.all %}
+        {% for post in author.posts.all %}
+        <a href="{% url 'photo_blog-detail' post.id %}"><img class="crop" width="147" height="147" src="{{ post.photo.url }}"></a>
+        {% endfor %}
+      {% else %}
+        <center>
+          You haven't made any posts. When you do, they will show up here.
+        </center>
+      {% endif %}
     </div>
   {% endfor %}
 </div>
