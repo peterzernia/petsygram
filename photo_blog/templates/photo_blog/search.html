@@ -28,7 +28,10 @@
               <a id=imageElement{{post.id}}  onclick="toggleLike({{post.id}})"><img src="/media/nav_buttons/unliked.svg" height="17" width="17"></a>
             {% endif %}
             <a href="{% url 'photo_blog-comment' post.id %}"><img src="/media/nav_buttons/comment.svg" height="17" width="17"></a></br>
-            <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} likes</a>
+            {% if post.likes.count != 0 %}
+              <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}">{{post.likes.count}} likes</a>
+            {% endif %}
+            <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}"></a>
             <p>
               <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
             <p>
