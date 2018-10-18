@@ -6,7 +6,8 @@
     <h4><a class="black-link-plain" href="{% url 'photo_blog-profile' view.kwargs.username %}">{{ view.kwargs.username }}</a></h4>
   </center>
   <a href="{% url 'direct_messages-new' %}">New Message</a>
-  <a align="right" href="{% url 'direct_messages-inbox' %}">Inbox</a>
+  |
+  <a href="{% url 'direct_messages-inbox' %}">Inbox</a>
   </br>
   </br>
   {% if object_list %}
