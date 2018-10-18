@@ -4,9 +4,6 @@
 <div class="content">
   <div class="infinite-container">
     {% for post in object_list %}
-    <script type="text/javascript">
-      window.USER_LIKE_URL = "{% url 'photo_blog-post_like_api' post.id %}";
-    </script>
       <article class="media content-section">
         <div class="infinite-item">
             <div class="media-body">

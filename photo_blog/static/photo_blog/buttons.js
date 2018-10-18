@@ -14,10 +14,6 @@ function toggleLike(post_id){
         success: function(data) {
           $("#likeCount" + post_id).html(data.like_count + ' likes');
           $("#imageElement" + post_id).html(data.img);
-          console.log(data);
-        },
-        error: function(error) {
-          console.log(error);
         }
-        });
-    };
+      });
+};
