@@ -82,15 +82,15 @@ source ~/venvs/petsygram/bin/activate
 ```
 python
 ```
-then
+    then
 ```
 from django.utils.crypto import get_random_string
 ```
-then
+    then
 ```
 chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
 ```
-and lastly
+    and lastly
 ```
 get_random_string(50, chars)
 ```
@@ -99,7 +99,7 @@ get_random_string(50, chars)
 ```
 SECRET_KEY = os.environ.get('PETSYGRAM')
 ```
-with
+    with
 ```
 SECRET_KEY = 'your newly generated secret key here'
 ```
