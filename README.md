@@ -1,11 +1,11 @@
 # petsygram
 
-Petsygram is an Instagram clone made using Django.
+petsygram is an Instagram clone made using Django.
 
 
-# Features
+## Features
 
-Register, Login/Logout, Forgot password (email link)
+Register, Login/Logout, Reset password (email link)
 
 Home page showing posts of users you follow
 
@@ -17,18 +17,98 @@ Comment on posts showing truncated comments on the home page and full comments i
 
 Search page with ability to search for users or hashtags used in a post
 
-Post photos to Petsygram with caption and location set by user, author and time set automatically
+Post photos to petsygram with caption and location set by user, author and time set automatically
 
 Post image size reduced to a width of 450px with proportional height to save room on server
 
-Image file deleted when post is deleted 
+Image file deleted when post is deleted
 
 Notification page showing when users have liked or commented on a post and when     users have started following you
 
-Profile page for users showing profile image (with default image), number of followers, bio, website and posts, jQuery AJAX follow/unfollow button if not the authenticated user, othewise edit profile and logout button
+Profile page for users showing profile image (with default image), number of followers, bio, website and posts, jQuery AJAX follow/unfollow button if not the authenticated user, otherwise edit profile and logout button
 
 Edit profile page to edit username, email. website, bio, and profile image
 
 Profile image reduced to 150px x 150px to save space on the server
 
 Direct messaging system with inbox and links to individual message threads with other users
+
+Infinite scrolling on home page
+
+
+## Getting Started
+
+Follow these instructions to get a copy running on your local machine for development and testing purposes
+
+### Prerequisites
+
+```
+Python 3.6 & git
+```
+
+### Installing
+
+Open up Terminal, and go into the directory where you want your local copy, e.g.
+```
+cd projects
+```
+
+Download a copy
+```
+git clone https://github.com/peterzernia/petsygram.git
+```
+
+Install a virtual environment
+```
+pip install virtualenv
+```
+
+Make a folder for your virtual environments e.g.
+```
+mkdir ~/venvs
+```
+
+Make a new virtual environment for this project
+```
+virtualenv --system-site-packages ~/venvs/petsygram
+```
+
+Start the virtual environment
+```
+source ~/venvs/petsygram/bin/activate
+```
+
+Go into the directory containing 'requirements.txt'
+```
+cd petsygram
+```
+
+Install the Python requirements
+```
+pip install -r requirements.txt
+```
+
+Make migrations to set up the database
+```
+python manage.py makemigrations
+```
+
+When this has completed, run these migrations
+```
+python manage.py migrate
+```
+
+Create a user profile to login with
+```
+python manage.py createsuperuser
+```
+
+Once you have followed the instructions to create a user, run the server
+```
+python manage.py runserver
+```
+
+If there were no errors anywhere, you can now go to http://localhost:8000/ in your browser to view a local copy of petsygram
+
+
+## Built With
