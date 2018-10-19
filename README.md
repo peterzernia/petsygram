@@ -48,37 +48,37 @@ Python 3.6 & git
 
 ### Installing
 
-1. Open up Terminal, and go into the directory where you want your local copy, e.g.
+1.Open up Terminal, and go into the directory where you want your local copy, e.g.
 ```
 cd projects
 ```
 
-2. Download a copy
+2.Download a copy
 ```
 git clone https://github.com/peterzernia/petsygram.git
 ```
 
-3. Install a virtual environment
+3.Install a virtual environment
 ```
 pip install virtualenv
 ```
 
-4. Make a folder for your virtual environments e.g.
+4.Make a folder for your virtual environments e.g.
 ```
 mkdir ~/venvs
 ```
 
-5. Make a new virtual environment for this project
+5.Make a new virtual environment for this project
 ```
 virtualenv --system-site-packages ~/venvs/petsygram
 ```
 
-6. Start the virtual environment
+6.Start the virtual environment
 ```
 source ~/venvs/petsygram/bin/activate
 ```
 
-7. Generate a secret key for your django app using
+7.Generate a secret key for your django app using
 ```
 python
 ```
@@ -95,7 +95,7 @@ chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
 get_random_string(50, chars)
 ```
 
-8. Copy this result and in your petsygram/petsygram/setting.py file replace
+8.Copy this result and in your petsygram/petsygram/setting.py file replace
 ```
 SECRET_KEY = os.environ.get('PETSYGRAM')
 ```
@@ -104,34 +104,34 @@ SECRET_KEY = os.environ.get('PETSYGRAM')
 SECRET_KEY = 'your newly generated secret key here'
 ```
 
-9. Go into the directory containing 'requirements.txt'
+9.Go into the directory containing 'requirements.txt'
 ```
 cd petsygram
 ```
 
-10. Install the Python requirements
+10.Install the Python requirements
 ```
 pip install -r requirements.txt
 ```
 
-11. Make migrations to set up the database
+11.Make migrations to set up the database
 ```
 python manage.py makemigrations
 ```
 
-12. When this has completed, run these migrations
+12.When this has completed, run these migrations
 ```
 python manage.py migrate
 ```
 
-13. Create a user profile to login with
+13.Create a user profile to login with
 ```
 python manage.py createsuperuser
 ```
 
-14. Once you have followed the instructions to create a user, run the server
+14.Once you have followed the instructions to create a user, run the server
 ```
 python manage.py runserver
 ```
 
-15. If there were no errors anywhere, you can now go to http://localhost:8000/ in your browser to view a local copy of petsygram
+15.If there were no errors anywhere, you can now go to http://localhost:8000/ in your browser to view a local copy of petsygram
