@@ -5,10 +5,10 @@
   window.USER_FOLLOW_URL = "{% url 'user_follow' view.kwargs.username %}";
 </script>
 <div class="content">
-  <div class="">
+  <div class="media-body">
     {% for author in object_list %}
       <center>
-        <img class="rounded-circle" src="{{ author.profile.image.url }}">
+        <img class="rounded-circle crop'" width="150" height="150" src="{{ author.profile.image.url }}">
         <h5>{{ view.kwargs.username }}</h5>
         <a id=followCount class="black-link" href="{% url 'user_followers' view.kwargs.username %}">{{author.profile.followers.count}} Followers</a></br>
         {% if author.profile.bio %}
@@ -35,9 +35,15 @@
         <a href="{% url 'photo_blog-detail' post.id %}"><img class="crop" width="147" height="147" src="{{ post.photo.url }}"></a>
         {% endfor %}
       {% else %}
-        <center>
-          You haven't made any posts. When you do, they will show up here.
-        </center>
+        {% if view.kwargs.username == user.username %}
+            <center>
+                You haven't made any posts yet. When you do, your posts will show up here.
+            </center>
+        {% else %}
+            <center>
+                {{ view.kwargs.username }} hasn't made any posts yet. When they do, their posts will show up here.
+            </center>
+        {% endif %}
       {% endif %}
     </div>
   {% endfor %}
