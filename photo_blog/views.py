@@ -29,23 +29,21 @@ class Home(LoginRequiredMixin, ListView):
 
 
 def search(request):
-    queryset_list = None
+    queryset = None
     query = request.GET.get('q')
     if query:
         if query.startswith('#'):
-            queryset_list = Post.objects.all()
-            queryset_list = queryset_list.filter(
+            queryset = Post.objects.all().filter(
                 Q(caption__icontains=query)
                 ).distinct()
         else:
             Profile = apps.get_model('users', 'Profile')
-            queryset_list = Profile.objects.all()
-            queryset_list = queryset_list.filter(
+            queryset = Profile.objects.all().filter(
                 Q(user__username__icontains=query)
                 ).distinct()
 
     context = {
-        'posts': queryset_list
+        'posts': queryset
     }
     return render(request, "photo_blog/search.html", context)
 

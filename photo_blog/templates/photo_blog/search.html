@@ -34,8 +34,6 @@
             <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}"></a>
             <p>
               <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
-            <p>
-              <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
               {{ post.caption }}
             </p>
             {% if post.comments.all %}
