@@ -8,7 +8,7 @@
   <div class="media-body">
     {% for author in object_list %}
       <center>
-        <img class="rounded-circle crop'" width="150" height="150" src="{{ author.profile.image.url }}">
+        <img class="rounded-circle crop" width="150" height="150" src="{{ author.profile.image.url }}">
         <h5>{{ view.kwargs.username }}</h5>
         <a id=followCount class="black-link" href="{% url 'user_followers' view.kwargs.username %}">{{author.profile.followers.count}} Followers</a></br>
         {% if author.profile.bio %}

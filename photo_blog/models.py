@@ -35,6 +35,19 @@ class Post(models.Model):
         super().save()
 
         img = Image.open(self.photo.path)
+        exif = img._getexif()
+        orientation_key = 274
+        if exif and orientation_key in exif:
+            orientation = exif[orientation_key]
+
+            rotate_values = {
+                3: Image.ROTATE_180,
+                6: Image.ROTATE_270,
+                8: Image.ROTATE_90
+            }
+
+            if orientation in rotate_values:
+                img = img.transpose(rotate_values[orientation])
 
         output_size = (450, (img.height / img.width) * 450)
         img.thumbnail(output_size)
