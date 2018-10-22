@@ -29,9 +29,9 @@
       </center>
     </div>
     </br>
-    <div>
+    <center>
       {% if author.posts.all %}
-        {% for post in author.posts.all %}
+        {% for post in author.posts.all reversed %}
         <a href="{% url 'photo_blog-detail' post.id %}"><img class="crop" width="147" height="147" src="{{ post.photo.url }}"></a>
         {% endfor %}
       {% else %}
@@ -45,7 +45,7 @@
             </center>
         {% endif %}
       {% endif %}
-    </div>
+    </center>
   {% endfor %}
 </div>
 
