@@ -9,7 +9,7 @@
     <div class="media-body">
       <div class="article-metadata">
         <div>
-          <img class='rounded-circle article-img'src="{{ post.author.profile.image.url }}" height="50" width="50">
+          <img class='rounded-circle article-img crop'src="{{ post.author.profile.image.url }}" height="50" width="50">
           <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
           {% if post.location %}
           <small>{{post.location}}</small>

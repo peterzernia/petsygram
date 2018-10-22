@@ -13,9 +13,14 @@ class InboxView(LoginRequiredMixin, ListView):
     template_name = 'direct_messages/inbox.html'
 
     def get_queryset(self):
-        direct_messages = DirectMessage.objects.filter(receiver=self.request.user)
-        direct_messages = direct_messages.order_by('sender_id', '-date_sent').distinct('sender_id')
-        return direct_messages
+        senders = User.objects.all()
+        queryset = []
+        for sender in senders:
+            if sender != self.request.user:
+                direct_messages =  DirectMessage.objects.filter(sender=sender, receiver=self.request.user)
+                if direct_messages:
+                    queryset.append(direct_messages[0])
+        return queryset
 
 
 class ThreadView(LoginRequiredMixin, ListView):

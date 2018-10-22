@@ -11,7 +11,7 @@
       {% if notification.comment.post.author == user %}
         <div class="media-body">
           <div class="article-metadata">
-            <img class='rounded-circle article-img'src="{{ notification.comment.author.profile.image.url }}" height="50" width="50">
+            <img class='rounded-circle article-img crop'src="{{ notification.comment.author.profile.image.url }}" height="50" width="50">
             <a class="black-link" href="{% url 'photo_blog-profile' notification.comment.author.username %}">{{ notification.comment.author }}</a>
             commented at {{ notification.comment.date_posted }}:
             <p class="ml-5">
@@ -28,7 +28,7 @@
         {% if notification.post.author == user %}
           <div class="media-body">
             <div class="article-metadata">
-              <img class='rounded-circle article-img'src="{{ notification.user.profile.image.url }}" height="50" width="50">
+              <img class='rounded-circle article-img crop'src="{{ notification.user.profile.image.url }}" height="50" width="50">
               <a class="black-link" href="{% url 'photo_blog-profile' notification.user.username %}">{{ notification.user }}</a>
               liked your
               <a class="black-link" href="{% url 'photo_blog-detail' notification.post.id %}">post.</a>
@@ -44,7 +44,7 @@
         {% if notification.profile.user == user %}
           <div class="media-body">
             <div class="article-metadata">
-              <img class='rounded-circle article-img'src="{{ notification.user.profile.image.url }}" height="50" width="50">
+              <img class='rounded-circle article-img crop'src="{{ notification.user.profile.image.url }}" height="50" width="50">
               <a class="black-link" href="{% url 'photo_blog-profile' notification.user.username %}">{{ notification.user }}</a>
               started following you.
               </br>
