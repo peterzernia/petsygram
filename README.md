@@ -92,9 +92,13 @@ from django.utils.crypto import get_random_string
 ```
 chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
 ```
-  **and lastly**
+  **then**
 ```
 get_random_string(50, chars)
+```
+  **and lastly**
+```
+quit()
 ```
 
 8. Copy this result and in your petsygram/petsygram/setting.py file replace

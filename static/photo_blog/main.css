@@ -1,7 +1,8 @@
 body {
 
-  margin: 0;
-  min-width: 600px;
+  margin: 0px;
+  overflow-x: hidden;
+
 
 }
 
@@ -31,7 +32,6 @@ body {
     background-color: white;
     background-image: none;
     background-repeat: repeat;
-    background-attachment: scroll;
     background-position: 0% 0%;
     border-top: .5px solid #F5F5F5;
     position: fixed;
@@ -69,6 +69,7 @@ body {
 
 .nav {
 
+  width: 100%;
   position: absolute;
 
 }

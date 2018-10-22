@@ -5,7 +5,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -24,7 +24,7 @@
     <nav class="navbar navbar-light bg-white sticky-top">
       <img class="navbar-brand" src="/media/logo.png">
       {% if user.is_authenticated %}
-      <a class="nav-item inline" href="{% url 'direct_messages-inbox' %}"><img src="/media/nav_buttons/inbox.png" height="30" width="30"></a>
+      <a class="nav-item inline ml-auto" href="{% url 'direct_messages-inbox' %}"><img src="/media/nav_buttons/inbox.png" height="30" width="30"></a>
       {% endif %}
     </nav>
     <div class="content mt-3">
