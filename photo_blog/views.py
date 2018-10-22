@@ -18,6 +18,7 @@ class Home(LoginRequiredMixin, ListView):
     template_name = 'photo_blog/home.html'
     paginate_by = 4
 
+# Queryset returned is posts with authors the authenticated user follows.
     def get_queryset(self):
         following = []
         pk = self.request.user
@@ -28,6 +29,8 @@ class Home(LoginRequiredMixin, ListView):
         return object_list
 
 
+# If the query begins with hashtag, posts with hashtag are displayed. If query
+# the query does not begin with a hashtag, users profiles are returned.
 def search(request):
     queryset = None
     query = request.GET.get('q')
@@ -133,6 +136,9 @@ class DeleteComment(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
+# This view creates a REST API. Everytime the REST API is accessed through a
+# jQuery button, the authenticated user is added/removed from the list of users
+# who have liked the post.
 class LikePostAPI(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
@@ -174,6 +180,7 @@ class ViewLikes(LoginRequiredMixin, ListView):
         return post
 
 
+# Queryset returns three types of notifications specific to each user.
 class ViewNotifications(LoginRequiredMixin, ListView):
     model = Notification
     template_name = 'photo_blog/notifications.html'

@@ -12,6 +12,8 @@ class InboxView(LoginRequiredMixin, ListView):
     model = DirectMessage
     template_name = 'direct_messages/inbox.html'
 
+# Queryset returns one DirectMessage, if it exists, from every user to create
+# a link to the message thread with that user.
     def get_queryset(self):
         senders = User.objects.all()
         queryset = []
@@ -27,6 +29,9 @@ class ThreadView(LoginRequiredMixin, ListView):
     model = DirectMessage
     template_name = 'direct_messages/thread.html'
 
+# Queryset combines two querysets between two users, one with user as reciever,
+# and one with user as sender, then orders by date to display a message thread
+# between two users.
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         dm1 = DirectMessage.objects.filter(receiver=user, sender=self.request.user)

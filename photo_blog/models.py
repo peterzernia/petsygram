@@ -29,6 +29,10 @@ class Post(models.Model):
     def get_api_like_url(self):
         return reverse('photo_blog-post_like_api', kwargs={"pk": self.pk})
 
+# Save checks exif information for cellphone photos to see what orientation the
+# photo was taken in, then rotates the image to be upright. images are reduced
+# to a width of 450px, with proportionally reduced height to save room on the
+# server.
     def save(self):
         super().save()
 
@@ -69,6 +73,8 @@ class Comment(models.Model):
         return reverse('photo_blog-comment', kwargs={'pk': self.pk})
 
 
+# Notification model is used for three different types of notifications:
+# like, comment, and follow notifications.
 class Notification(models.Model):
     post = models.ForeignKey('photo_blog.Post', on_delete=models.CASCADE, null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)

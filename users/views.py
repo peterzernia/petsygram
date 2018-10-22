@@ -49,6 +49,9 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', context)
 
 
+# This view creates a REST API. Everytime the REST API is accessed through a
+# jQuery button, the authenticated user is added/removed from the list of users
+# who have followed the specific user.
 class FollowUser(APIView):
     authentication_classes = (authentication.SessionAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)

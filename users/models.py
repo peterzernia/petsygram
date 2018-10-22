@@ -14,6 +14,9 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
+# Save checks exif information for cellphone photos to see what orientation the
+# photo was taken in, then rotates the image to be upright. images are reduced
+# to an output of 200px x 200px to save room on the server.
     def save(self, **kwargs):
         super().save()
 

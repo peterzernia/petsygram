@@ -6,6 +6,7 @@ from .models import Post, Comment, Notification
 from users.models import Profile
 
 
+# Image file is deleted when post is deleted.
 @receiver(post_delete, sender=Post)
 def auto_delete_file_on_post_delete(sender, instance, **kwargs):
     if instance.photo:
@@ -13,13 +14,15 @@ def auto_delete_file_on_post_delete(sender, instance, **kwargs):
             os.remove(instance.photo.path)
 
 
+# Creates a notification object if a comment is made on a post by a user other
+# than the author.
 @receiver(post_save, sender=Comment)
 def auto_create_comment_notification(sender, instance, created, **kwargs):
     if created:
         if instance.author != instance.post.author:
             Notification.objects.create(post=instance.post, comment=instance, date_posted=instance.date_posted)
 
-
+# Creates a notification instance if a post is liked.
 @receiver(m2m_changed, sender=Post.likes.through)
 def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
     if action == "post_add":
@@ -30,6 +33,7 @@ def auto_create_like_notification(sender, instance, action, pk_set, **kwargs):
         Notification.objects.filter(user_id=pk, post=instance).delete()
 
 
+# Creates a notification instance if a user is followed.
 @receiver(m2m_changed, sender=Profile.followers.through)
 def auto_create_follow_notification(sender, instance, action, pk_set, **kwargs):
     if action == "post_add":
