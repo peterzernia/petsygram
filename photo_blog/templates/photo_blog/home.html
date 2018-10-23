@@ -29,7 +29,7 @@
                   <a id=likeCount{{post.id}} class="black-link-plain mb-3" href="{% url 'photo_blog-post_likes' post.id %}"></a>
                   <p>
                     <a class="black-link" href="{% url 'photo_blog-profile' post.author.username %}">{{ post.author }}</a>
-                    {{ post.caption }}
+                    {{ post.caption|truncatechars:100 }}
                   </p>
                   {% if post.comments.all %}
                     <p>
@@ -37,9 +37,7 @@
                       {{ post.comments.first|truncatechars:50 }}
                     </p>
                   {% endif %}
-                  {% if post.comments.all %}
-                    <a href="{% url 'photo_blog-detail' post.id %}">View Comments</a>
-                  {% endif %}
+                  <a href="{% url 'photo_blog-detail' post.id %}">View Post</a>
                   <p><small>{{ post.date_posted|date:'F d, Y' }}</small></p>
                 </div>
               </div>
@@ -55,7 +53,8 @@
   </div>
 {% else %}
   <center>
-    Start following other <a href="search">users</a> to see their posts.
+    Start following other <a href="search">users</a> to see their posts. </br> </br>
+    Suggested user: <a href="/user/peterzernia">peterzernia</a>
   <center>
 {% endif %}
 

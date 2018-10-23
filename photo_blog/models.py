@@ -17,7 +17,7 @@ class Post(models.Model):
     caption = models.TextField(max_length=2200, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    location = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=30, blank=True)
     likes = models.ManyToManyField(User, blank=True, related_name='post_likes')
 
     def __str__(self):

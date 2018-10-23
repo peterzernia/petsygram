@@ -22,7 +22,7 @@
 
   <body>
     <nav class="navbar navbar-light bg-white sticky-top">
-      <img class="navbar-brand" src="/media/logo.png">
+      <a href="{% url 'photo_blog-home' %}"><img class="navbar-brand" height = "48" src="/media/logo.png"></a>
       {% if user.is_authenticated %}
       <a class="nav-item inline ml-auto" href="{% url 'direct_messages-inbox' %}"><img src="/media/nav_buttons/inbox.png" height="30" width="30"></a>
       {% endif %}
