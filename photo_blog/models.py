@@ -33,7 +33,7 @@ class Post(models.Model):
 # photo was taken in, then rotates the image to be upright. images are reduced
 # to a width of 450px, with proportionally reduced height to save room on the
 # server.
-    def save(self):
+    def save(self, **kwargs):
         super().save()
 
         img = Image.open(self.photo.path)
@@ -66,15 +66,12 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
-    def save(self):
+    def save(self, **kwargs):
         super().save()
 
-    def get_absolute_url(self):
-        return reverse('photo_blog-comment', kwargs={'pk': self.pk})
 
-
-# Notification model is used for three different types of notifications:
-# like, comment, and follow notifications.
+# Notification model is used for three different types of notifications: like,
+# comment, and follow notifications.
 class Notification(models.Model):
     post = models.ForeignKey('photo_blog.Post', on_delete=models.CASCADE, null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)

@@ -6,3 +6,5 @@ __pycache__
 local_settings.py
 /media
 sqlite3.db
+.coverage
+htmlcov
