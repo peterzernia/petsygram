@@ -3,14 +3,14 @@ from .models import Post, Comment, Notification, get_image_path
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
-import os, tempfile, random
+import random
 
 
 class PostTest(TestCase):
     def create_post(self, caption='#selfie',
                     author=User.objects.create_user(username=str(random.randint(1,100000)),
                                                     password='12345'),
-                    photo=SimpleUploadedFile(name='test_image.jpg',
+                    photo=SimpleUploadedFile(name='default.jpg',
                                              content=open('./media/default.jpg',
                                                           'rb').read(),
                                              content_type='image/jpeg'),
